@@ -1,23 +1,22 @@
 import tkinter as tk
 from tkinter import ttk
-from  geopy.geocoders import Nominatim
 import requests
-# from text import Api_key  # Import API key from config.py
+from geopy.geocoders import Nominatim
 
 def get_weather():
     city = city_entry.get()
     geolocator = Nominatim(user_agent="weather_app")
     location = geolocator.geocode(city)
-    
+
     if location:
         latitude = location.latitude
         longitude = location.longitude
         url = f'http://api.weatherapi.com/v1/current.json?key=9f06dd24443a40a9b5293651240802&q={latitude},{longitude}'
         try:
             response = requests.get(url)
-            response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+            response.raise_for_status()
             weather_data = response.json()
-            
+
             if 'error' not in weather_data:
                 weather_info['text'] = f"Weather: {weather_data['current']['condition']['text']}\nTemperature: {weather_data['current']['temp_c']}°C"
             else:
@@ -31,9 +30,9 @@ def get_weather():
 window = tk.Tk()
 window.title("Weather Forecast")
 
-# Set a custom theme
+# Set a different theme - 'clam'
 style = ttk.Style(window)
-style.theme_use('clam')
+style.theme_use('vista')
 
 # Custom colors
 background_color = '#f0f0f0'
@@ -59,7 +58,7 @@ weather_info.grid(row=2, columnspan=2, padx=10, pady=10)
 # Set focus to the city entry field
 city_entry.focus()
 
-label1=ttk.Label(text="Created by: Rajput Sujal")
+label1 = ttk.Label(text="Created by: Shivam Gohil")
 label1.grid(row=4, columnspan=5, padx=10, pady=50)
 
 # Run the tkinter event loop
